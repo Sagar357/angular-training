@@ -1,0 +1,67 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Bootcamp Enrollment Form</h2>
+      <p>{{ userform.value | json }}</p>
+    <hr />
+    <p>
+      {{ userModel | json }}
+    </p>
+    <h2 *ngIf="submitted" class="text-success"> Form Submitted Successfully !</h2>
+    <h2 *ngIf="errorMessage!=null" class="text-danger"> {{errorMessage}} !</h2>
+      <form #userform="ngForm" (ngSubmit)="onSubmit()" novalidate [class.d-none]="submitted">
+        <div class="form-group">
+          <label for="txtname">Name</label>
+          <input type="text" required name="name" #inputname="ngModel" class="form-control" [class.is-invalid]="inputname.invalid && inputname.touched" [(ngModel)]="userModel.name">
+          <small *ngIf="inputname.invalid && inputname.touched" class="text-danger">* Name is required</small>
+        </div>
+        <div class="form-group">
+          <label for="txtemail">Email</label>
+          <input type="email" name="email" id="txtemail" class="form-control" [(ngModel)]="userModel.email">
+        </div>
+        <div class="form-group">
+          <label for="txtphone">Phone</label>
+          <input type="tel" #phone="ngModel" required [class.is-invalid]="phone.invalid && phone.touched" pattern="^\d{10}$" name="phone" id="txtphone" class="form-control" [(ngModel)]="userModel.phone">
+          <div *ngIf="phone.errors && (phone.invalid || phone.touched)">
+            <small class="text-danger" *ngIf="phone.errors['pattern']">* Phone number should be of 10 digits.</small>
+            <small class="text-danger" *ngIf="phone.errors['required']">* Phone number is required.</small>
+          </div>
+          
+        </div>
+        <div class="form-group">
+          <select name="course" id="drpcourse" (blur)="validateCourse(topic.value)" #topic="ngModel" (change)="validateCourse(topic.value)" class="custom-select" [(ngModel)]="userModel.course">
+            <option value="default" [selected]="isSelected">I am interested in </option>
+            <option  *ngFor="let course of courses; index as i">{{course}}</option>
+          </select>
+          <small class="text-danger" *ngIf="hasError">* Please Select a topic</small>
+          
+        </div>
+        <ul>
+          <li class="form-check">
+            Time Preference
+          </li>
+          <li class="form-check">
+            <input type="radio" id="tmor" class="form-check-input" name="timing" value="Morning" [(ngModel)]="userModel.timing" />
+            <label class="form-check-lable" for="tmor">Morning (9AM-12PM)</label>
+          </li>
+          <li class="form-check">
+            <input type="radio" id="teve" class="form-check-input" name="timing" value="Evening" [(ngModel)]="userModel.timing" />
+            <label class="form-check-lable" for="teve">Evening (5PM-8PM)</label>
+          </li>
+        </ul>
+
+        <div class="form-check mb-3">
+          <input type="checkbox" name="offers" class="form-check-input" [(ngModel)]="userModel.offers" />
+          <label class="form-check-lable"> 
+            Send me promotional offers
+          </label>
+        </div>
+        <button [disabled]="userform.form.invalid"  [class.btn-secondary]="userform.form.invalid || hasError" type="submit" class="btn btn-primary">Submit Form</button>
+
+      </form>
+    </div>
+    <div class="col-md-6">
+      
+    </div>
+  </div>
+</div>
