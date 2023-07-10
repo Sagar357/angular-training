@@ -35,7 +35,8 @@ value:any   */
   /**
    * onSubmit
    */
-  public onSubmit() {
+  public onSubmit(form:any) {
+    console.log(form);
     this._enrollment.enroll(this.userModel).subscribe(
       data=>console.log("success!",data),
       error=>this.errorMessage=error.statusText

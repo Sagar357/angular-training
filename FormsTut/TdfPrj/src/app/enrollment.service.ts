@@ -8,7 +8,7 @@ import {throwError} from "rxjs"
   providedIn: 'root'
 })
 export class EnrollmentService {
-  public _url='http://localhost:3000/enrol';
+  public _url='http://localhost:3000/enroll';
   constructor(private client:HttpClient) { }
   enroll(user:User){
     return this.client.post<any>(this._url,user).pipe(
