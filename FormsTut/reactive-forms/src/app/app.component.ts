@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 //import { FormControl, FormGroup } from '@angular/forms';
 import { FormBuilder, FormsModule ,Validators} from '@angular/forms';
-import { forbiddenNameValidator } from './Shared/username.validator';
+import { forbiddenName } from './Shared/username.validator';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,7 @@ export class AppComponent {
   title = 'reactive-forms';
   constructor(private fb:FormBuilder){}
   public RegistrationForm=this.fb.group({
-    name:['Sagar' ,[Validators.required ,Validators.minLength(3),forbiddenNameValidator]],
+    name:['Sagar' ,[Validators.required ,Validators.minLength(3),forbiddenName(new RegExp('[a^]'))]],
     phone:[''],
     password:[''],
     confirm_password:[''],
