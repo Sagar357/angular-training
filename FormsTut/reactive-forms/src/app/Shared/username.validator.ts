@@ -1,6 +1,8 @@
+import { LowerCasePipe } from "@angular/common";
 import { AbstractControl } from "@angular/forms";
 
 export function forbiddenNameValidator(control:AbstractControl):{[key:string]:any}|null{
-    const forbidden=/admin/.test(control.value)
+    const str=control.value;
+    const forbidden=/admin/.test(str.toLowerCase())
     return forbidden?{'forbiddenName':{value:control.value}}:null; 
 }
