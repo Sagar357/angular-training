@@ -3,14 +3,31 @@
   <form [formGroup]="RegistrationForm">
     <div class="form-group">
       <label> Username </label>
-      <input type="text" [class.is-invalid]="RegistrationForm.get('name')?.invalid && RegistrationForm.get('name')?.touched" class="form-control" formControlName="name">
-      <div *ngIf="RegistrationForm.get('name')?.invalid || RegistrationForm.get('name')?.touched">
-        <small class="text-danger" *ngIf="RegistrationForm.get('name')?.errors?.['required']">* User Name is required</small>
-        <small class="text-danger" *ngIf="RegistrationForm.get('name')?.errors?.['minlength']">* User Name must be of atleast 3 characters</small>
-        <small class="text-danger" *ngIf="RegistrationForm.get('name')?.errors?.['forbiddenName']">* {{RegistrationForm.get('name')?.errors?.['forbiddenName'].value}} User Name is forbidden.</small>
+      <input type="text" [class.is-invalid]="getUserName?.invalid && getUserName?.touched" class="form-control" formControlName="name">
+      <div *ngIf="getUserName?.invalid || getUserName?.touched">
+        <small class="text-danger" *ngIf="getUserName?.errors?.['required']">* User Name is required</small>
+        <small class="text-danger" *ngIf="getUserName?.errors?.['minlength']">* User Name must be of atleast 3 characters</small>
+        <small class="text-danger" *ngIf="getUserName?.errors?.['forbiddenName']">* {{getUserName?.errors?.['forbiddenName'].value}} User Name is forbidden.</small>
       </div>
     </div>
 
+    <div class="form-group" [class.is-invalid]="getEmail?.invalid && getEmail?.touched">
+      <label> Email </label>
+      <button type="button" class="btn btn-secondary btn-sm m-2" (click)="addAlternateEmails()">Add</button>
+      <div formArrayName="alternateEmail" *ngFor="let email of getAlternateEmail.controls; let i=index">
+        <input type="text" [formControlName]="i" class="form-control my-1">
+      </div>
+      <input type="email" class="form-control" formControlName="email">
+      <small class="text-danger" [class.d-none]="getEmail?.valid||getEmail?.untouched">* Email is mandatory</small>
+    </div>
+
+    <div class="form-group" style="padding-left: 25px;">
+      <input type="checkbox" class="form-check-input" formControlName="subscribe" />
+      <label class="form-check-label"> 
+        Send me promotional mails
+      </label>
+    </div>
+    
     <div class="form-group">
       <label> Password </label>
       <input type="password" class="form-control" formControlName="password">
