@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 //import { FormControl, FormGroup } from '@angular/forms';
 import { FormBuilder, FormGroup, FormArray ,Validators, Form} from '@angular/forms';
 import { forbiddenName } from './Shared/username.validator';
+import { RegistrationService } from './registration.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { forbiddenName } from './Shared/username.validator';
 })
 export class AppComponent implements OnInit{
   title = 'reactive-forms';
-  constructor(private fb:FormBuilder){}
+  constructor(private fb:FormBuilder ,private service:RegistrationService){}
   public RegistrationForm!: FormGroup;
 
   ngOnInit(): void {
@@ -74,5 +75,15 @@ export class AppComponent implements OnInit{
 
   public addAlternateEmails(){
     this.getAlternateEmail.push( this.fb.control(''));
+  }
+
+  public onSubmit(){
+    this.service.register(this.RegistrationForm.value)
+      .subscribe(
+        response=>{
+          console.log(response)
+        }
+      );
+    console.log(this.RegistrationForm.value)
   }
 }

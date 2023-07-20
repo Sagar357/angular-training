@@ -1,6 +1,6 @@
  <div class="container-fluid">
   <h2>Registratioin Form</h2>
-  <form [formGroup]="RegistrationForm">
+  <form [formGroup]="RegistrationForm"  (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label> Username </label>
       <input type="text" [class.is-invalid]="getUserName?.invalid && getUserName?.touched" class="form-control" formControlName="name">
@@ -56,7 +56,7 @@
       </div>
 
     </div>
-    <button type="submit" class="btn btn-primary">Register</button>
+    <button [disabled]="RegistrationForm.invalid" [class.btn-secondary]="RegistrationForm.invalid" type="submit" class="btn btn-primary">Register</button>
   </form>
   {{ RegistrationForm.value | json }}
 </div>
